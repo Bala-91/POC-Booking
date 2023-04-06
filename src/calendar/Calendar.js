@@ -1,122 +1,37 @@
-import React, { Component } from 'react';
-import { DayPilot, DayPilotCalendar, DayPilotNavigator } from "@daypilot/daypilot-lite-react";
-import "./CalendarStyles.css";
+import React, { useEffect } from 'react';
 
-const styles = {
-  wrap: {
-    display: "flex"
-  },
-  left: {
-    marginRight: "10px"
-  },
-  main: {
-    flexGrow: "1"
-  }
-};
 
-class Calendar extends Component {
+function Calendar() {
 
-  constructor(props) {
-    super(props);
-    this.calendarRef = React.createRef();
-    this.state = {
-      viewType: "Week",
-      // viewType: "Day",
-      durationBarVisible: false,
-      timeRangeSelectedHandling: "Enabled",
-      onTimeRangeSelected: async args => {
-        const dp = this.calendar;
-        const modal = await DayPilot.Modal.prompt("Create a new event:", "Event 1");
-        dp.clearSelection();
-        if (!modal.result) { return; }
-        dp.events.add({
-          start: args.start,
-          end: args.end,
-          id: DayPilot.guid(),
-          text: modal.result
-        });
-      },
-      eventDeleteHandling: "Update",
-      onEventClick: async args => {
-        const dp = this.calendar;
-        const modal = await DayPilot.Modal.prompt("Update event text:", args.e.text());
-        if (!modal.result) { return; }
-        const e = args.e;
-        e.data.text = modal.result;
-        dp.events.update(e);
-      },
-    };
-  }
+  useEffect(() => {
+    // Your client credentials
+    var your_client_id = "sbox1669848954";
 
-  get calendar() {
-    return this.calendarRef.current.control;
-  }
+    // Initialize OnSched.js with clientId and environment (sbox or live)
+    var onsched = window.OnSched(your_client_id, "sbox");
 
-  componentDidMount() {
+    // Get instance of elements to use for creating elements
+    var elements = onsched.elements();
 
-    const events = [
-      {
-        id: 1,
-        text: "Event 1",
-        start: "2023-03-27T10:30:00",
-        end: "2023-03-27T13:00:00"
-      },
-      {
-        id: 2,
-        text: "Event 2",
-        start: "2023-03-28T09:30:00",
-        end: "2023-03-28T11:30:00",
-        backColor: "#6aa84f"
-      },
-      {
-        id: 3,
-        text: "Event 3",
-        start: "2023-03-29T12:00:00",
-        end: "2023-03-29T15:00:00",
-        backColor: "#f1c232"
-      },
-      {
-        id: 4,
-        text: "Event 4",
-        start: "2023-03-30T11:30:00",
-        end: "2023-03-30T14:30:00",
-        backColor: "#cc4125"
-      },
-    ];
+    // Initialize availability parameters with serviceId (required), and
+    // any additional optional parameters
+    var availabilityParams = { locationId: 'fd1486d6-1af6-41c2-b53d-b4d2cdead9db', serviceId: '271796', roundRobin: 1 };
 
-    const startDate = "2023-03-30";
+    // Include any additional options (optional)
+    var availabilityOptions = {};
 
-    this.calendar.update({ startDate, events });
+    // Create the availability element
+    var availability = elements.create("availability", availabilityParams, availabilityOptions);
 
-  }
+    // Mount the element (which triggers the API)
+    availability.mount("availability");
+    
+  }, [])
 
-  render() {
-    return (
-      <div style={styles.wrap}>
-        <div style={styles.left}>
-          <DayPilotNavigator
-            selectMode={"week"}
-            // selectMode={"day"}
-            showMonths={3}
-            skipMonths={3}
-            startDate={"2023-03-07"}
-            selectionDay={"2023-03-07"}
-            onTimeRangeSelected={args => {
-              this.calendar.update({
-                startDate: args.day
-              });
-            }}
-          />
-        </div>
-        <div style={styles.main}>
-          <DayPilotCalendar
-            {...this.state}
-            ref={this.calendarRef}
-          />
-        </div>
-      </div>
-    );
-  }
+
+
+  return (
+    <div id="availability"></div>
+  )
 }
-
 export default Calendar;
