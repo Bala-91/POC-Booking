@@ -25,3 +25,4 @@ Run `npm run build` to build the project.
 ![Screenshot from 2023-04-06 17-29-41](https://user-images.githubusercontent.com/114048974/230376214-78080e80-5340-4a78-b7aa-a358a2c833e9.png)
 ![Screenshot from 2023-04-06 17-29-05](https://user-images.githubusercontent.com/114048974/230376218-68a3178c-e110-4b9a-84a9-6d1d8a951c5a.png)
 ![Screenshot from 2023-04-06 17-12-44](https://user-images.githubusercontent.com/114048974/230376227-4d1e0533-5d85-4130-9f93-a33c9e8f06e6.png)
+![Screenshot from 2023-04-06 17-14-29](https://user-images.githubusercontent.com/114048974/230552524-fd1800d0-8790-44e5-9cc9-f8e33cc9f0bd.png)
